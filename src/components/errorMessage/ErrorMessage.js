@@ -1,10 +1,10 @@
 import error from './error.gif'
-import './error.scss'
+import './errorMessage.scss'
 
-const Error = () => {
+const ErrorMessage = () => {
   return (
     <img className="error" src={error} alt="Error"/>
   )
 }
 
-export default Error
+export default ErrorMessage
