@@ -2,7 +2,7 @@ class MarvelService {
   _apiBase = 'https://gateway.marvel.com:443/v1/public/'
   _apiKey = 'apikey=a352bdb01e9a5faf4c37a3fc40cd6ba6'
 
-  getRes = async (url) => {
+  getResource = async (url) => {
     const res = await fetch(url)
 
     if (!res.ok) {
@@ -12,18 +12,19 @@ class MarvelService {
     return await res.json()
   }
 
-  getAllChar = async () => {
-    const res = await this.getRes(`${this._apiBase}characters?limit=9&offset=210&${this._apiKey}`)
-    return res.data.results.map(this._transformChar)
+  getAllCharacters = async () => {
+    const res = await this.getResource(`${this._apiBase}characters?limit=9&offset=210&${this._apiKey}`)
+    return res.data.results.map(this._transformCharacter)
   }
 
-  getChar = async (id) => {
-    const res = await this.getRes(`${this._apiBase}characters/${id}?${this._apiKey}`)
-    return this._transformChar(res.data.results[0])
+  getCharacter = async (id) => {
+    const res = await this.getResource(`${this._apiBase}characters/${id}?${this._apiKey}`)
+    return this._transformCharacter(res.data.results[0])
   }
 
-  _transformChar = (char) => {
+  _transformCharacter = (char) => {
     return {
+      id: char.id,
       name: char.name,
       description: char.description ? `${char.description.slice(0, 210)}...` : 'There is no description for this character',
       thumbnail: char.thumbnail.path + '.' + char.thumbnail.extension,
